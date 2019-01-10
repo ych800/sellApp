@@ -13,7 +13,8 @@ module.exports = {
     proxyTable: {},
 
     // Various Dev Server settings
-    host: 'localhost', // can be overwritten by process.env.HOST
+    //host: 'localhost', // can be overwritten by process.env.HOST
+    host: '0.0.0.0', // 浏览器ip不能访问问题
     port: 8080, // can be overwritten by process.env.PORT, if port is in use, a free one will be determined
     autoOpenBrowser: false,
     errorOverlay: true,
@@ -34,6 +35,7 @@ module.exports = {
 
     // https://webpack.js.org/configuration/devtool/#development
     devtool: 'cheap-module-eval-source-map',
+    //devtool: 'inline-source-map', // 浏览器ip不能访问 问题
 
     // If you have problems debugging vue-files in devtools,
     // set this to false - it *may* help

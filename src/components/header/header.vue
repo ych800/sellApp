@@ -35,11 +35,35 @@
       <div class="detail" v-show="detailShow">
         <div class="detail-wrap clearfix">
           <div class="detail-content">
-            内容区
+            <p class="store_name">{{seller.name}}</p>
+            <div class="score-wrapper">
+              <div>
+                <star :size="48" :score="seller.score" v-if="seller.score"></star>
+              </div>
+            </div>
+            <div class="title">
+              <div class="line"></div>
+              <div class="text">优惠信息</div>
+              <div class="line"></div>
+            </div>
+            <ul class="supports" v-if="seller.supports">
+              <li class="item" v-for="(item,index) in seller.supports" :key="item.id">
+                <span class="icon" :class="classMap[seller.supports[index].type]"></span>
+                <span class="text">{{seller.supports[index].description}}</span>
+              </li>
+            </ul>
+            <div class="title">
+              <div class="line"></div>
+              <div class="text">商家公告</div>
+              <div class="line"></div>
+            </div>
+            <div class="bulletin">
+              <p class="content">{{seller.bulletin}}</p>
+            </div>
           </div>
         </div>
-        <div class="detail-close">
-          <i class="icon-close" @click="hideDetail"></i>
+        <div class="detail-close" @click="hideDetail">
+          <i class="icon-close"></i>
         </div>
       </div>
     </transition>
@@ -104,6 +128,8 @@
               bg-img('invoice_1')
             &.special
               bg-img('special_1')
+            &.guarantee
+              bg-img('guarantee_1')
           .text
             font-size: 10px
             line-height: 12px
@@ -162,16 +188,79 @@
       height:100%
       width:100%
       overflow:auto
+      backdrop-filter: blur(10px)
       background-color:rgba(7,17,27,0.8)
       left:0
-      backdrop-filter: blur(10px)
-      transform: all 0.5 ease
+      &.fade-enter-active, &.fade-leave-active
+        transition:all 0.5s ease
+      &.fade-enter,&.fade-leave-to
+        background-color:rgba(7,17,27,0)
+        left:100%
       .detail-wrap
         min-height:100%
         width:100%
         .detail-content
           margin-top:64px
           padding-bottom:64px
+          .store_name
+            font-size:16px
+            line-height:16px
+            font-weight:700
+            margin-bottom:16px
+            text-align:center
+          .score-wrapper
+            text-align:center
+            line-height:24px
+          .title
+            width:80%;
+            display:flex
+            margin:28px auto 24px auto
+            .line
+              border-1px(rgba(255,255,255,0.2))
+              flex:1
+              position:relative
+              top:-6px
+            .text
+              font-size:14px
+              font-weight:700
+              padding:0 12px
+          .supports
+            width:80%
+            margin:0 auto
+            .item
+              padding:0 12px
+              margin-bottom:12px
+              &:last-child
+                margin-bottom:0
+              .icon
+                display:inline-block
+                width:16px
+                height:16px
+                background-repeat:no-repeat
+                background-size:16px 16px
+                vertical-align:top
+                border-radius:2px
+                &.discount
+                  bg-img('discount_2')
+                &.decrease
+                  bg-img('decrease_2')
+                &.invoice
+                  bg-img('invoice_2')
+                &.special
+                  bg-img('special_2')
+                &.guarantee
+                  bg-img('guarantee_2')
+              .text
+                line-height:16px
+                font-size:12px
+                margin-left:6px
+          .bulletin
+            width:80%
+            margin:0 auto
+            .content
+              font-size:12px
+              line-height:24px
+              padding:0 12px
       .detail-close
         position:relative
         height:32px
@@ -181,19 +270,18 @@
         color: rgba(255,255,255,0.5)
         font-size:32px
         margin: -64px auto 0 auto
-        .icon-close
-          cursor:pointer
-      &.fade-enter, &.fade-leave
-        left:-100%
-        background-color:rgba(7,17,27,0)
 </style>
 
 <script>
+  import star from '../star/star.vue';
 export default{
   props: {
     seller: {
       type: Object
     }
+  },
+  components: {
+    star
   },
   data () {
     return {
@@ -209,6 +297,7 @@ export default{
     }
   },
   created() {
+    console.log(star);
     this.classMap = ['decrease', 'discount', 'special', 'invoice', 'guarantee'];
   }
 };
