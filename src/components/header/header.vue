@@ -297,7 +297,6 @@ export default{
     }
   },
   created() {
-    console.log(star);
     this.classMap = ['decrease', 'discount', 'special', 'invoice', 'guarantee'];
   }
 };
